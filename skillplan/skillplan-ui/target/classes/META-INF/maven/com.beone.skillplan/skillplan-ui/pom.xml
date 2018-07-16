@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beone.skillplan</groupId>
+    <artifactId>skillplan-reactor</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>skillplan-ui</artifactId>
+  <name>Skillplan Application</name>
+  <description>The skillplan application</description>
+	
+  <properties>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+		<AZURE_CLIENT_ID>328bac29-706c-4dbb-9e57-720f89afd379</AZURE_CLIENT_ID>
+		<API_URL>http://localhost:8080/skillplan-api</API_URL>
+	</properties>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>build.properties.json</include>
+				</includes>
+			</resource>
+		</resources>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<!-- Ignore/Execute plugin execution -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<!-- copy-dependency plugin -->
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>exec-maven-plugin</artifactId>
+										<versionRange>[1.4.0,)</versionRange>
+										<goals>
+											<goal>exec</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>exec-bower-update</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<executable>bower</executable>
+							<arguments>
+								<argument>update</argument>
+							</arguments>
+						</configuration>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>grunt-build</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>grunt</executable>
+						</configuration>
+					</execution>
+					<execution>
+						<id>grunt-deploy</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>grunt</executable>
+							<commandlineArgs>deploy</commandlineArgs>
+							<environmentVariables>
+								<AZURE_CLIENT_ID>${AZURE_CLIENT_ID}</AZURE_CLIENT_ID>
+								<API_URL>${API_URL}</API_URL>							
+							</environmentVariables>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>runNpmInstall</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.4.0</version>
+						<executions>
+							<execution>
+								<id>npm install</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>npm</executable>
+									<arguments>
+										<argument>install</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+ 
+ 
+</project>

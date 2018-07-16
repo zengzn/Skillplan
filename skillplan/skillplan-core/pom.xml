@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beone.skillplan</groupId>
+    <artifactId>skillplan-reactor</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>skillplan-core</artifactId>
+  <name>skillplan-core</name>
+  <description>The skillplan core project</description>
+  
+  <properties>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+	</properties>
+	
+	<dependencies>
+	
+		<!-- APIs / Specifications -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Utilities -->
+		<dependency>
+			<groupId>de.jollyday</groupId>
+			<artifactId>jollyday</artifactId>
+		</dependency>
+	
+		<!-- Logging -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- Unit testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	
+	</dependencies>
+	
+</project>

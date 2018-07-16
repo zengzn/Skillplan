@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beone.skillplan</groupId>
+    <artifactId>skillplan-reactor</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>skillplan-repository</artifactId>
+  <name>skillplan-repository</name>
+  <description>The skillplan repository project</description>
+  
+  <properties>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+		<version.hibernate>5.0.10.Final</version.hibernate>
+		<version.mysql-connector>5.1.42</version.mysql-connector>
+		<version.flyway>4.2.0</version.flyway>
+	</properties>
+
+	<dependencies>
+
+		<!-- APIs -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+		</dependency>
+	
+		<!-- Skillplan -->
+		<dependency>
+			<groupId>com.beone.skillplan</groupId>
+			<artifactId>skillplan-core</artifactId>
+		</dependency>
+		
+		<!-- MySQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${version.mysql-connector}</version>
+		</dependency>
+		
+		<!-- Utils -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		
+		<!-- JPA implementation -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+			<version>${version.hibernate}</version>
+			<scope>provided</scope>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>dom4j</groupId>
+		            <artifactId>dom4j</artifactId>
+		        </exclusion>
+		    </exclusions>
+        </dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${version.hibernate}</version>
+			<scope>provided</scope>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>dom4j</groupId>
+		            <artifactId>dom4j</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${version.hibernate}</version>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>dom4j</groupId>
+		            <artifactId>dom4j</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>${version.hibernate}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- Database migration -->
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		    <version>${version.flyway}</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- plugin to generate the JPA meta model -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+			</plugin>
+		</plugins>
+	</build>
+  
+</project>

@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.beone.skillplan</groupId>
+    <artifactId>skillplan-reactor</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>skillplan-api</artifactId>
+  <packaging>war</packaging>
+  <name>skillplan-api</name>
+  <description>The skillplan API project</description>
+  
+  <properties>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+		<arquillian.cube.autostart />
+		<docker.api.url>tcp://127.0.0.1:2375</docker.api.url>
+		<version.arquillian-cube>1.7.0</version.arquillian-cube>
+		<version.arquillian>1.1.13.Final</version.arquillian>
+		<version.swagger>1.5.12</version.swagger>
+		<version.restassured>3.0.3</version.restassured>
+		<version.wiremock>2.6.0</version.wiremock>
+		<version.jersey>2.23.2</version.jersey>
+	</properties>
+  <build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<pluginManagement>
+			<plugins>
+				<!-- Ignore/Execute plugin execution -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<!-- copy-dependency plugin -->
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.kongchen</groupId>
+										<artifactId>swagger-maven-plugin</artifactId>
+										<versionRange>[3.1.1,)</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<locations>com.beone.skillplan</locations>
+							<basePath>/skillplan-api/api</basePath>
+							<info>
+								<title>Beone skillplan</title>
+								<version>${project.version}</version>
+								<description>API description for the beone skillplan project</description>
+							</info>
+							<swaggerDirectory>${project.build.directory}/swagger-api</swaggerDirectory>
+						</apiSource>
+					</apiSources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<directory>${project.build.directory}/swagger-api</directory>
+							<includes>
+								<include>*.json</include>
+							</includes>
+							<targetPath>/</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<arquillian.launch>${arquillian.launch}</arquillian.launch>
+						<arquillian.cube.autostart>${arquillian.cube.autostart}</arquillian.cube.autostart>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/${project.artifactId}-${project.version}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/swagger-ui-master/dist</directory>
+									<filtering>true</filtering>
+									<excludes>
+										<exclude>index.html</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.arquillian.cube</groupId>
+				<artifactId>arquillian-cube-bom</artifactId>
+				<version>${version.arquillian-cube}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${version.arquillian}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+  <dependencies>
+    <!-- SKillplan -->
+    <dependency>
+			<groupId>com.beone.skillplan</groupId>
+			<artifactId>skillplan-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.beone.skillplan</groupId>
+			<artifactId>skillplan-repository</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.beone.skillplan</groupId>
+			<artifactId>skillplan-bl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.beone.skillplan</groupId>
+			<artifactId>skillplan-model</artifactId>
+		</dependency>
+		
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>${version.swagger}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!--  JSON binding -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${version.jackson}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${version.jjwt}</version>
+		</dependency>
+
+		<!-- APIs -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+		</dependency>
+
+		<!-- Unit testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Integration testing -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${version.restassured}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>${version.restassured}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock-standalone</artifactId>
+			<version>${version.wiremock}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.arquillian.cube</groupId>
+			<artifactId>arquillian-cube-requirement</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.arquillian.cube</groupId>
+			<artifactId>arquillian-cube-docker</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.core</groupId>
+			<artifactId>arquillian-core-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- arquillian-cube uses docker-java which at the same time uses jersey client -->
+		<dependency>
+		    <groupId>com.sun.jersey</groupId>
+		    <artifactId>jersey-client</artifactId>
+		    <version>1.19.4</version>
+		    <scope>test</scope>
+		</dependency>
+		
+  </dependencies>
+  
+  <profiles>
+		<profile>
+			<id>wildfly-remote</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<arquillian.launch>wildfly-remote</arquillian.launch>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-remote</artifactId>
+					<version>8.2.1.Final</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+  
+</project>
