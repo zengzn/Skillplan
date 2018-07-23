@@ -1,0 +1,1 @@
+grant all on skillplan.* to 'skillplan'@localhost identified by 'xkOrmId31UdfXEpi';

@@ -1,0 +1,22 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+	<persistence-unit name="persistenceUnit" transaction-type="JTA" >
+		<!-- transaction-type="RESOURCE_LOCAL" -->
+		<jta-data-source>java:jboss/datasources/skillplan</jta-data-source>
+		<class>com.beone.skillplan.repository.entity.AbstractEntity</class>
+		<class>com.beone.skillplan.repository.entity.Skill</class>
+		<class>com.beone.skillplan.repository.entity.User</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+		  <property name="javax.persistence.schema-generation.database.action" value="none"/>
+            <property name="hibernate.id.new_generator_mappings" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+            <property name="hibernate.jdbc.time_zone" value="UTC"/>
+		</properties>
+	</persistence-unit>
+</persistence>

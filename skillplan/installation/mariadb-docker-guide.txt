@@ -1,0 +1,25 @@
+#Download docker
+sudo docker pull mariadb
+
+#Start container
+sudo docker run -p 3306:3306 --name mariadb -e MYSQL_ROOT_PASSWORD=test -d mariadb:latest
+
+#Login into docker
+sudo docker exec -it mariadb bash
+
+#Login to mysql as root
+mysql -u root -p mysql
+
+#Create skillplan user
+CREATE USER skillplan identified by 'xkOrmId31UdfXEpi';
+
+#Create skillplan database
+create database skillplan default character set utf8 default collate utf8_bin;
+
+#Grant privileges
+GRANT ALL PRIVILEGES ON skillplan.* to 'skillplan'@'%' IDENTIFIED BY 'xkOrmId31UdfXEpi';
+GRANT ALL PRIVILEGES ON skillplan.* to 'skillplan'@'localhost' IDENTIFIED BY 'xkOrmId31UdfXEpi';
+
+#Start / stop container
+sudo docker start mariadb
+sudo docker stop mariadb
