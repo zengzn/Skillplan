@@ -285,24 +285,24 @@
 		
   </dependencies>
   
-  <profiles>
-		<profile>
-			<id>wildfly-remote</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<arquillian.launch>wildfly-remote</arquillian.launch>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-remote</artifactId>
-					<version>8.2.1.Final</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
+<!--   <profiles> -->
+<!-- 		<profile> -->
+<!-- 			<id>wildfly-remote</id> -->
+<!-- 			<activation> -->
+<!-- 				<activeByDefault>true</activeByDefault> -->
+<!-- 			</activation> -->
+<!-- 			<properties> -->
+<!-- 				<arquillian.launch>wildfly-remote</arquillian.launch> -->
+<!-- 			</properties> -->
+<!-- 			<dependencies> -->
+<!-- 				<dependency> -->
+<!-- 					<groupId>org.wildfly</groupId> -->
+<!-- 					<artifactId>wildfly-arquillian-container-remote</artifactId> -->
+<!-- 					<version>8.2.1.Final</version> -->
+<!-- 					<scope>test</scope> -->
+<!-- 				</dependency> -->
+<!-- 			</dependencies> -->
+<!-- 		</profile> -->
+<!-- 	</profiles> -->
   
 </project>

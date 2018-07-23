@@ -24,11 +24,11 @@
 			<artifactId>skillplan-repository</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>>com.beone.skillplan</groupId>
+			<groupId>com.beone.skillplan</groupId>
 			<artifactId>skillplan-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>>com.beone.skillplan</groupId>
+			<groupId>com.beone.skillplan</groupId>
 			<artifactId>skillplan-model</artifactId>
 		</dependency>
 		
