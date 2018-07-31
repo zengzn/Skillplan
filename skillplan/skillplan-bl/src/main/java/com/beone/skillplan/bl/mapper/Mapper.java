@@ -1,6 +1,5 @@
 package com.beone.skillplan.bl.mapper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +7,6 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.dozer.MappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +47,8 @@ public class Mapper {
 	 * @param <T>
 	 * @return
 	 */
-	public <T> List<?> mapAll(List<?> sources, Class<T> destinationClass, long userId) {
-		return sources.stream().map(source -> map(source, destinationClass, userId)).collect(Collectors.toList());
+	public <T> List<?> mapAll(List<?> sources, Class<T> destinationClass) {
+		return sources.stream().map(source -> map(source, destinationClass)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -63,9 +61,9 @@ public class Mapper {
 	 * @param <T>
 	 * @return
 	 */
-	public <T> T map(Object source, Class<T> destinationClass, long userId) {
+	public <T> T map(Object source, Class<T> destinationClass) {
 		T destination = dozerMapper.map(source, destinationClass);
-		customMappings(source, destination, userId);
+		customMappings(source, destination);
 		return destination;
 	}
 
@@ -79,7 +77,7 @@ public class Mapper {
 	 */
 	public void map(Object source, Object destination, long userId) {
 		dozerMapper.map(source, destination);
-		customMappings(source, destination, userId);
+		customMappings(source, destination);
 	}
 
 	/**
@@ -92,9 +90,9 @@ public class Mapper {
 	 * @param destination
 	 *            The destination object
 	 */
-	public void customMappings(Object source, Object destination, long userId) {
+	public void customMappings(Object source, Object destination) {
 		if (isMappingOf(source, SkillModel.class, destination, Skill.class)){
-			setEntityExtras(source, destination, userId);
+			setEntityExtras(source, destination);
 		}else if (isMappingOf(source, User.class, destination, UserModel.class)){
 			User user = (User)source;
 			UserModel um = (UserModel) destination;
@@ -125,8 +123,8 @@ public class Mapper {
 	
 
 	
-	private void setEntityExtras(Object sourceModel, Object destinationEntity, long id){
-		User currentUser = userService.readById(id);
+	private void setEntityExtras(Object sourceModel, Object destinationEntity){
+		
 		if(isMappingOf(sourceModel, SkillModel.class, destinationEntity, Skill.class)){
 			SkillModel source = (SkillModel) sourceModel;
 			Skill destination = (Skill) destinationEntity;

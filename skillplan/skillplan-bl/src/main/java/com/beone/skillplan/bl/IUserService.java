@@ -31,7 +31,7 @@ public interface IUserService {
 	 * @param id
 	 * @return the user found (User::id == id)
 	 */
-	User readById(Long id);
+	User readById(long id);
 
 	/**
 	 * update the persistent user with the new values
@@ -42,12 +42,6 @@ public interface IUserService {
 	User update(User user);
 
 
-	/**
-	 * read all the users of azure. 
-	 * 
-	 * @return list of found user
-	 */
-	List<User> readAllromAzure();
 
 	
 }

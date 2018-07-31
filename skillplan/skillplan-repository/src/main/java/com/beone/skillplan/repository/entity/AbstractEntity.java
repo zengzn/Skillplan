@@ -43,7 +43,7 @@ public abstract class AbstractEntity<T extends Serializable> implements Serializ
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.proway.repository.model.Entity#setId(T)
+	 * @see com.beone.repository.model.Entity#setId(T)
 	 */
 	@Override
 	public void setId(final T id) {

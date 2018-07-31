@@ -50,8 +50,8 @@ public class UserResource extends AbstractResource {
 			response = UserModel.class, responseContainer = "List")
 	@Transactional
 	public List<UserModel> readUsers(){
-		List<User> usersFromAzure = userService.readAllromAzure();
-		return (List<UserModel>) customMapper.mapAll(usersFromAzure, UserModel.class, userId);
+		List<User> usersFromAzure = userService.readAll();
+		return (List<UserModel>) customMapper.mapAll(usersFromAzure, UserModel.class);
 	}
 
 	

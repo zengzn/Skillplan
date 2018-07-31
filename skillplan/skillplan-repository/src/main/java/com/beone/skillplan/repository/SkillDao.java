@@ -49,6 +49,12 @@ public class SkillDao extends AbstractDao<Skill> implements ISkillDao {
 
 		return paginatingResultDto;
 	}
+
+	@Override
+	public PaginatingResultDTO<Skill> readAllEntriesForUser(long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

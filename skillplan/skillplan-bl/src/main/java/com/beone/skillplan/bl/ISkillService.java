@@ -28,7 +28,7 @@ public interface ISkillService {
 	 * @return the skill found
 	 * @throws EntityNotFoundException
 	 */
-	List<Skill> readSkillsForAzureId(String userId, boolean closed);
+	List<Skill> readSkillsForUserId(long userId);
 
 	/**
 	 * delete the persistent skill

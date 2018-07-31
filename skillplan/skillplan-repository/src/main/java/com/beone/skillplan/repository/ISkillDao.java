@@ -7,6 +7,6 @@ public interface ISkillDao extends Dao<Skill> {
 
 	PaginatingResultDTO<Skill> readSkilledUsers(int skillId);
 
-	
+	PaginatingResultDTO<Skill> readAllEntriesForUser(long userId);
 }
 
