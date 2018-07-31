@@ -1,5 +1,6 @@
 package com.beone.skillplan.repository;
 
+import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -8,6 +9,10 @@ import javax.persistence.criteria.Root;
 import com.beone.skillplan.repository.entity.User;
 import com.beone.skillplan.repository.entity.User_;
 
+/**
+ * concrete repository implementation of the user entity
+ */
+@Dependent
 public class UserDao extends AbstractDao<User> implements IUserDao {
 
 	@Override
